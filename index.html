@@ -211,9 +211,12 @@
     .card-meta { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 7px; }
     .meta-row { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--text-muted); }
     .meta-row svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: 1px; }
+    .card-action-btns {
+      display: flex; flex-direction: column; gap: 5px;
+      margin-left: auto; flex-shrink: 0;
+    }
     .call-btn {
       display: inline-flex; align-items: center; gap: 5px;
-      margin-left: auto; flex-shrink: 0;
       padding: 5px 11px; border-radius: 100px;
       background: rgba(217,119,87,.12); border: 1px solid rgba(217,119,87,.3);
       color: var(--accent); font-size: 11px; font-weight: 600;
@@ -223,7 +226,6 @@
     .call-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
     .map-btn {
       display: inline-flex; align-items: center; gap: 5px;
-      flex-shrink: 0;
       padding: 5px 11px; border-radius: 100px;
       background: rgba(80,160,220,.12); border: 1px solid rgba(80,160,220,.3);
       color: #69aadc; font-size: 11px; font-weight: 600;
@@ -933,14 +935,16 @@ function makeCard(r) {
         <div class="meta-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span>${r.hours}</span>
-          <a class="call-btn" href="tel:${r.phone}" onclick="event.stopPropagation()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12.1 19.79 19.79 0 0 1 1.35 3.5 2 2 0 0 1 3.32 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.43a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
-            전화하기
-          </a>
-          <a class="map-btn" href="https://map.kakao.com/link/search/${encodeURIComponent(r.nameKr)}" target="_blank" onclick="event.stopPropagation()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            지도 보기
-          </a>
+          <div class="card-action-btns">
+            <a class="call-btn" href="tel:${r.phone}" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12.1 19.79 19.79 0 0 1 1.35 3.5 2 2 0 0 1 3.32 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.43a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+              전화하기
+            </a>
+            <a class="map-btn" href="https://map.kakao.com/link/search/${encodeURIComponent(r.nameKr)}" target="_blank" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              지도 보기
+            </a>
+          </div>
         </div>
         <div class="meta-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12.1 19.79 19.79 0 0 1 1.35 3.5 2 2 0 0 1 3.32 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.43a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
