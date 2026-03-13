@@ -211,7 +211,16 @@
     .card-meta { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 7px; }
     .meta-row { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--text-muted); }
     .meta-row svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: 1px; }
-    .price-tag { font-size: 12px; font-weight: 600; color: var(--accent); margin-left: auto; }
+    .call-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-left: auto; flex-shrink: 0;
+      padding: 5px 11px; border-radius: 100px;
+      background: rgba(217,119,87,.12); border: 1px solid rgba(217,119,87,.3);
+      color: var(--accent); font-size: 11px; font-weight: 600;
+      text-decoration: none; transition: background .15s, border-color .15s;
+    }
+    .call-btn:hover { background: rgba(217,119,87,.22); border-color: var(--accent); }
+    .call-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
 
     /* ── RESERVATION MODAL ── */
     .modal-backdrop {
@@ -632,7 +641,7 @@ const restaurants = [
   /* 3 Stars */
   {
     stars:3, name:'Gaon', nameKr:'가온', cuisine:'한식 파인다이닝', type:'korean',
-    area:'강남구 논현동', price:'₩₩₩₩',
+    area:'강남구 논현동', price:'₩₩₩₩', phone:'02-545-2223',
     desc:'한국 전통 궁중요리를 현대적으로 재해석한 최정상 파인다이닝. 계절 식재료를 활용한 테이스팅 메뉴가 인상적이다.',
     reservation:'필수 (공식 홈페이지)',
     hours:'점심 12:00 · 저녁 18:00',
@@ -642,7 +651,7 @@ const restaurants = [
   },
   {
     stars:3, name:'Mingles', nameKr:'밍글스', cuisine:'한식 컨템퍼러리', type:'fusion',
-    area:'강남구 신사동 가로수길', price:'₩₩₩₩',
+    area:'강남구 신사동 가로수길', price:'₩₩₩₩', phone:'02-515-2226',
     desc:'강민구 셰프가 이끄는 한식과 서양식의 절묘한 조화. 한국 전통 발효식품을 모던하게 활용한 독창적 메뉴.',
     reservation:'필수',
     hours:'점심 12:00 · 저녁 18:30',
@@ -652,7 +661,7 @@ const restaurants = [
   },
   {
     stars:3, name:'Mosu Seoul', nameKr:'모수 서울', cuisine:'컨템퍼러리', type:'fusion',
-    area:'종로구 삼청동', price:'₩₩₩₩',
+    area:'종로구 삼청동', price:'₩₩₩₩', phone:'02-6203-1917',
     desc:'안성재 셰프의 자연에서 영감 받은 예술적 코스 요리. 수개월 대기를 감수할 만한 서울 최고의 파인다이닝 경험.',
     reservation:'필수 (수개월 대기)',
     hours:'저녁 18:00~',
@@ -663,7 +672,7 @@ const restaurants = [
   /* 2 Stars */
   {
     stars:2, name:'Jungsik', nameKr:'정식당', cuisine:'뉴 코리안', type:'fusion',
-    area:'강남구 역삼동', price:'₩₩₩₩',
+    area:'강남구 역삼동', price:'₩₩₩₩', phone:'02-517-4654',
     desc:'임정식 셰프의 뉴 코리안 퀴진. 전통 한식을 파인다이닝 형식으로 완성한 현대 한국 요리의 선구자.',
     reservation:'필수',
     hours:'점심 12:00 · 저녁 18:00',
@@ -673,7 +682,7 @@ const restaurants = [
   },
   {
     stars:2, name:'La Yeon', nameKr:'라연', cuisine:'한식 파인다이닝', type:'korean',
-    area:'중구 장충동 (신라호텔)', price:'₩₩₩₩',
+    area:'중구 장충동 (신라호텔)', price:'₩₩₩₩', phone:'02-2233-3131',
     desc:'신라호텔 23층에 위치한 최고급 한식당. 전통 궁중 한식의 깊이와 현대적 감각이 어우러지는 공간.',
     reservation:'필수',
     hours:'점심 12:00 · 저녁 18:00',
@@ -683,7 +692,7 @@ const restaurants = [
   },
   {
     stars:2, name:'Kwon Sooksoo', nameKr:'권숙수', cuisine:'한식', type:'korean',
-    area:'강남구 청담동', price:'₩₩₩₩',
+    area:'강남구 청담동', price:'₩₩₩₩', phone:'02-542-6268',
     desc:'권우중 셰프가 이끄는 한식 파인다이닝. 제철 식재료와 전통 조리법을 고집하는 진정성 있는 한국 요리.',
     reservation:'필수',
     hours:'저녁 18:00~',
@@ -693,7 +702,7 @@ const restaurants = [
   },
   {
     stars:2, name:'Soigné', nameKr:'수아녜', cuisine:'컨템퍼러리', type:'fusion',
-    area:'강남구 청담동', price:'₩₩₩',
+    area:'강남구 청담동', price:'₩₩₩', phone:'02-547-8190',
     desc:'류태환 셰프의 독창적 창작 요리. 한국적 정서와 글로벌 감각을 결합한 섬세한 테이스팅 코스.',
     reservation:'필수',
     hours:'저녁 18:00~',
@@ -703,7 +712,7 @@ const restaurants = [
   },
   {
     stars:2, name:'Sushi Sangjun', nameKr:'스시 상준', cuisine:'일식 오마카세', type:'japanese',
-    area:'강남구 청담동', price:'₩₩₩₩',
+    area:'강남구 청담동', price:'₩₩₩₩', phone:'02-549-1786',
     desc:'도쿄에서 수련한 김상준 셰프의 에도마에 스시. 국내산 최상급 재료로 완성한 한 점 한 점.',
     reservation:'필수 (수개월 대기)',
     hours:'저녁 18:00 · 20:30',
@@ -713,7 +722,7 @@ const restaurants = [
   },
   {
     stars:2, name:'Onjium', nameKr:'온지음', cuisine:'전통 한식', type:'korean',
-    area:'종로구 계동', price:'₩₩₩',
+    area:'종로구 계동', price:'₩₩₩', phone:'02-742-5746',
     desc:'궁중음식연구원과 연계한 전통 한식 레스토랑. 조선 왕실 음식 문화를 현대적으로 계승.',
     reservation:'필수',
     hours:'점심 12:00 · 저녁 18:00',
@@ -723,7 +732,7 @@ const restaurants = [
   },
   {
     stars:2, name:'Dote', nameKr:'도떼', cuisine:'프렌치 컨템퍼러리', type:'french',
-    area:'강남구 삼성동', price:'₩₩₩₩',
+    area:'강남구 삼성동', price:'₩₩₩₩', phone:'02-511-3380',
     desc:'유럽에서 수련한 셰프의 프렌치 기반 컨템퍼러리 요리. 계절마다 변하는 창의적 테이스팅 메뉴.',
     reservation:'필수',
     hours:'저녁 18:30~',
@@ -734,7 +743,7 @@ const restaurants = [
   /* 1 Star */
   {
     stars:1, name:'Bicena', nameKr:'비체나', cuisine:'이탈리안 컨템퍼러리', type:'fusion',
-    area:'강남구 청담동', price:'₩₩₩',
+    area:'강남구 청담동', price:'₩₩₩', phone:'02-548-2105',
     desc:'한국과 이탈리아 식문화의 조화. 제철 재료를 활용한 창의적인 이탈리안 코스 요리.',
     reservation:'권장',
     hours:'점심 12:00 · 저녁 18:30',
@@ -744,7 +753,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Evett', nameKr:'에벳', cuisine:'컨템퍼러리', type:'fusion',
-    area:'용산구 한남동', price:'₩₩₩',
+    area:'용산구 한남동', price:'₩₩₩', phone:'02-790-1917',
     desc:'한남동의 감각적인 파인다이닝. 계절 식재료 기반의 창의적 메뉴로 호평 받는 레스토랑.',
     reservation:'권장',
     hours:'점심 12:00 · 저녁 18:30',
@@ -754,7 +763,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Sushi Hyo', nameKr:'스시 효', cuisine:'일식 오마카세', type:'japanese',
-    area:'강남구 청담동', price:'₩₩₩₩',
+    area:'강남구 청담동', price:'₩₩₩₩', phone:'02-3448-0007',
     desc:'국산 제철 해산물을 사용하는 정통 스시 오마카세. 셰프의 정성이 담긴 섬세한 한 점 한 점.',
     reservation:'필수',
     hours:'저녁 18:00 · 20:30',
@@ -764,7 +773,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Dooreyoo', nameKr:'두레유', cuisine:'한식', type:'korean',
-    area:'종로구 통의동', price:'₩₩',
+    area:'종로구 통의동', price:'₩₩', phone:'02-739-7770',
     desc:'제철 국내산 재료만을 사용하는 소박하고 정직한 한식. 경복궁 옆 고즈넉한 한옥 분위기.',
     reservation:'권장',
     hours:'점심 12:00 · 저녁 18:00',
@@ -774,7 +783,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Joo Ok', nameKr:'주옥', cuisine:'한식', type:'korean',
-    area:'강남구 청담동', price:'₩₩₩',
+    area:'강남구 청담동', price:'₩₩₩', phone:'02-541-3109',
     desc:'신창호 셰프의 전통 한식 재해석. 발효와 숙성을 활용한 깊은 맛의 한식 코스 요리.',
     reservation:'필수',
     hours:'저녁 18:30~',
@@ -784,7 +793,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Palais de Gaumont', nameKr:'팔레 드 고몽', cuisine:'프렌치 클래식', type:'french',
-    area:'용산구 이태원', price:'₩₩₩₩',
+    area:'용산구 이태원', price:'₩₩₩₩', phone:'02-798-6565',
     desc:'클래식 프렌치 기법을 충실히 따르는 정통 프랑스 요리 레스토랑. 훌륭한 와인 페어링.',
     reservation:'권장',
     hours:'저녁 18:00~',
@@ -794,7 +803,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Balwoo Gongyang', nameKr:'발우공양', cuisine:'사찰음식', type:'korean',
-    area:'종로구 수송동', price:'₩₩',
+    area:'종로구 수송동', price:'₩₩', phone:'02-733-2081',
     desc:'불교 사찰음식을 선보이는 독특한 레스토랑. 오신채 없이 자연의 맛을 담은 건강한 채식 요리.',
     reservation:'권장',
     hours:'점심 11:30 · 저녁 17:30',
@@ -804,7 +813,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Dining in Space', nameKr:'다이닝 인 스페이스', cuisine:'컨템퍼러리', type:'fusion',
-    area:'강남구 도산대로', price:'₩₩₩',
+    area:'강남구 도산대로', price:'₩₩₩', phone:'02-518-0440',
     desc:'독창적인 공간과 예술적인 음식이 만나는 레스토랑. 시각과 미각 모두를 자극하는 몰입형 경험.',
     reservation:'필수',
     hours:'저녁 18:30~',
@@ -814,7 +823,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Sushi Cho', nameKr:'스시 초', cuisine:'일식 오마카세', type:'japanese',
-    area:'강남구 논현동', price:'₩₩₩₩',
+    area:'강남구 논현동', price:'₩₩₩₩', phone:'02-546-0070',
     desc:'광어부터 참치까지 국내산 제철 생선을 활용한 오마카세. 셰프의 내공이 빛나는 스시 코스.',
     reservation:'필수',
     hours:'저녁 18:00 · 20:30',
@@ -824,7 +833,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Antares', nameKr:'안타레스', cuisine:'컨템퍼러리', type:'fusion',
-    area:'강남구 신사동', price:'₩₩₩',
+    area:'강남구 신사동', price:'₩₩₩', phone:'02-514-3371',
     desc:'가로수길의 모던 파인다이닝. 프랑스 기법 기반의 창의적인 현대 요리.',
     reservation:'권장',
     hours:'저녁 18:00~',
@@ -834,7 +843,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Yun', nameKr:'윤', cuisine:'한식 컨템퍼러리', type:'fusion',
-    area:'강남구 압구정동', price:'₩₩₩',
+    area:'강남구 압구정동', price:'₩₩₩', phone:'02-547-2323',
     desc:'한국의 제철 식재료와 서양 조리 기법의 조화. 세련된 인테리어와 편안한 분위기.',
     reservation:'권장',
     hours:'점심 12:00 · 저녁 18:30',
@@ -844,7 +853,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Ryunique', nameKr:'류니끄', cuisine:'컨템퍼러리', type:'fusion',
-    area:'강남구 신사동', price:'₩₩₩',
+    area:'강남구 신사동', price:'₩₩₩', phone:'02-541-6651',
     desc:'류태환 셰프의 전 레스토랑 계보를 잇는 모던 다이닝. 유니크한 식재료 조합이 특징.',
     reservation:'권장',
     hours:'점심 12:00 · 저녁 18:30',
@@ -854,7 +863,7 @@ const restaurants = [
   },
   {
     stars:1, name:'Haevichi', nameKr:'해비치', cuisine:'한식 (해산물)', type:'korean',
-    area:'중구 소공동 (롯데호텔)', price:'₩₩₩',
+    area:'중구 소공동 (롯데호텔)', price:'₩₩₩', phone:'02-317-7181',
     desc:'신선한 해산물 중심의 고급 한식. 롯데호텔 내 위치한 프리미엄 한식당.',
     reservation:'권장',
     hours:'점심 11:30 · 저녁 17:30',
@@ -914,7 +923,10 @@ function makeCard(r) {
         <div class="meta-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span>${r.hours}</span>
-          <span class="price-tag">${r.price}</span>
+          <a class="call-btn" href="tel:${r.phone}" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12.1 19.79 19.79 0 0 1 1.35 3.5 2 2 0 0 1 3.32 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.43a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+            전화하기
+          </a>
         </div>
         <div class="meta-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12.1 19.79 19.79 0 0 1 1.35 3.5 2 2 0 0 1 3.32 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.43a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
