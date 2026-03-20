@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서울 미슐랭 가이드</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #131314;
+      --bg-card:     #1c1c1e;
+      --bg-raised:   #232325;
+      --bg-modal:    #18181a;
+      --border:      rgba(255,255,255,.08);
+      --border-h:    rgba(255,255,255,.16);
+      --text:        #faf9f0;
+      --text-sub:    rgba(250,249,240,.55);
+      --text-muted:  rgba(250,249,240,.35);
+      --accent:      #d97757;
+      --accent-dim:  rgba(217,119,87,.15);
+      --accent-h:    #e08868;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans KR', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(80px,12vw,140px) 40px clamp(60px,8vw,100px);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: -50%;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% -10%, rgba(217,119,87,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 20% 80%,  rgba(217,119,87,.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-size: 200px; pointer-events: none; opacity: .4;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 500; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 600; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px;
+      background: linear-gradient(160deg, var(--text) 30%, rgba(250,249,240,.55));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(14px,2vw,17px); color: var(--text-sub);
+      font-weight: 300; line-height: 1.7; max-width: 420px;
+      margin: 0 auto 48px;
+    }
+    .hero-stats {
+      display: inline-flex; gap: 0;
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; background: rgba(255,255,255,.03); backdrop-filter: blur(12px);
+    }
+    .stat-pill {
+      padding: 14px 28px; display: flex; flex-direction: column;
+      align-items: center; gap: 2px; border-right: 1px solid var(--border);
+    }
+    .stat-pill:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Noto Serif KR', serif; font-size: 1.3rem;
+      font-weight: 600; color: var(--accent);
+    }
+    .stat-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; white-space: nowrap; }
+
+    /* ── CONTROLS ── */
+    .controls {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(19,19,20,.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 320px; }
+    .search-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted); pointer-events: none;
+    }
+    .search-input {
+      width: 100%; padding: 10px 14px 10px 40px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--border);
+      border-radius: 8px; font-family: inherit; font-size: 13px;
+      color: var(--text); outline: none; transition: border-color .2s, background .2s;
+    }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-input:focus { border-color: var(--accent); background: rgba(255,255,255,.07); }
+    .filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 8px 16px; border: 1px solid var(--border); border-radius: 100px;
+      background: transparent; font-family: inherit; font-size: 12px;
+      color: var(--text-sub); cursor: pointer; transition: all .18s; white-space: nowrap;
+    }
+    .filter-btn:hover { border-color: var(--border-h); color: var(--text); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 500; }
+
+    /* ── SECTION ── */
+    .section { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .section-header {
+      display: flex; align-items: center; gap: 16px; padding: 52px 0 24px;
+    }
+    .section-stars { display: flex; gap: 3px; }
+    .section-stars svg { width: 16px; height: 16px; }
+    .section-title-text { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 600; }
+    .section-count { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+    .section-rule { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── CARDS ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px; padding-bottom: 16px;
+    }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      cursor: pointer; transition: border-color .2s, transform .25s, box-shadow .25s;
+    }
+    .card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.5);
+    }
+
+    /* photo thumbnail */
+    .card-art {
+      height: 200px; position: relative; overflow: hidden;
+      background: #1a1a1c;
+    }
+    .card-photo {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      transition: transform .5s ease;
+      display: block;
+    }
+    .card:hover .card-photo { transform: scale(1.05); }
+    .card-art-fallback {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* gradient overlay on photo */
+    .card-art::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,.08) 0%,
+        rgba(0,0,0,.25) 60%,
+        rgba(0,0,0,.6) 100%);
+      pointer-events: none;
+    }
+    /* bottom-left info on photo */
+    .card-art-info {
+      position: absolute; bottom: 14px; left: 16px; z-index: 2;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .art-badge {
+      display: flex; gap: 3px; padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(19,19,20,.7); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .art-badge svg { width: 11px; height: 11px; }
+    .art-cuisine-pill {
+      font-size: 10px; padding: 4px 10px; border-radius: 100px;
+      background: rgba(19,19,20,.7); backdrop-filter: blur(8px);
+      border: 1px solid rgba(217,119,87,.3); color: var(--accent);
+      font-weight: 500;
+    }
+    /* reserve CTA on hover */
+    .card-reserve-hint {
+      position: absolute; top: 14px; right: 14px; z-index: 2;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 600; letter-spacing: .5px;
+      padding: 6px 12px; border-radius: 100px;
+      opacity: 0; transform: translateY(-4px);
+      transition: opacity .2s, transform .2s;
+      pointer-events: none;
+    }
+    .card:hover .card-reserve-hint { opacity: 1; transform: translateY(0); }
+
+    /* card body */
+    .card-body { padding: 18px 20px 20px; }
+    .card-name { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 2px; }
+    .card-name-kr { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+    .card-desc { font-size: 13px; color: var(--text-sub); line-height: 1.75; margin-bottom: 16px; font-weight: 300; }
+    .card-meta { border-top: 1px solid var(--border); padding-top: 14px; display: flex; align-items: center; gap: 10px; }
+    .card-meta-info { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+    .meta-row { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--text-muted); }
+    .meta-row svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: 1px; }
+    .card-action-btns {
+      display: flex; flex-direction: column; gap: 5px;
+      flex-shrink: 0;
+    }
+    .call-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 11px; border-radius: 100px;
+      background: rgba(217,119,87,.12); border: 1px solid rgba(217,119,87,.3);
+      color: var(--accent); font-size: 11px; font-weight: 600;
+      text-decoration: none; transition: background .15s, border-color .15s;
+    }
+    .call-btn:hover { background: rgba(217,119,87,.22); border-color: var(--accent); }
+    .call-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .map-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 11px; border-radius: 100px;
+      background: rgba(80,160,220,.12); border: 1px solid rgba(80,160,220,.3);
+      color: #69aadc; font-size: 11px; font-weight: 600;
+      text-decoration: none; transition: background .15s, border-color .15s;
+    }
+    .map-btn:hover { background: rgba(80,160,220,.22); border-color: #69aadc; }
+    .map-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+    /* ── RESERVATION MODAL ── */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    .modal {
+      background: var(--bg-modal);
+      border: 1px solid var(--border-h);
+      border-radius: 24px 24px 0 0;
+      width: 100%; max-width: 720px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 0;
+      transform: translateY(100%);
+      transition: transform .35s cubic-bezier(.16,1,.3,1);
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+
+    /* modal header photo */
+    .modal-hero {
+      position: relative; height: 220px; overflow: hidden;
+      border-radius: 24px 24px 0 0;
+    }
+    .modal-hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+    }
+    .modal-hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.1), rgba(24,24,26,.9));
+    }
+    .modal-hero-content {
+      position: absolute; bottom: 20px; left: 24px; right: 24px; z-index: 2;
+      display: flex; align-items: flex-end; justify-content: space-between;
+    }
+    .modal-name { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 600; line-height: 1.2; }
+    .modal-name-kr { font-size: 13px; color: var(--text-sub); margin-top: 2px; }
+    .modal-stars { display: flex; gap: 4px; margin-bottom: 4px; }
+    .modal-stars svg { width: 15px; height: 15px; }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; z-index: 3;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(0,0,0,.5); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.1); }
+    .modal-close svg { width: 16px; height: 16px; }
+
+    .modal-body { padding: 28px 24px 32px; }
+
+    /* step tabs */
+    .modal-steps {
+      display: flex; gap: 0;
+      border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; margin-bottom: 28px;
+    }
+    .step-tab {
+      flex: 1; padding: 11px 16px;
+      background: transparent; border: none;
+      font-family: inherit; font-size: 12px; font-weight: 500;
+      color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      transition: all .18s; border-right: 1px solid var(--border);
+    }
+    .step-tab:last-child { border-right: none; }
+    .step-tab.active { background: var(--accent-dim); color: var(--accent); }
+    .step-tab .step-num {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--border); font-size: 10px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .18s, color .18s;
+    }
+    .step-tab.active .step-num { background: var(--accent); color: #fff; }
+    .step-tab.done .step-num { background: rgba(217,119,87,.4); color: var(--accent); }
+    .step-tab.done { color: var(--text-sub); }
+
+    /* form sections */
+    .form-section { display: none; }
+    .form-section.active { display: block; }
+
+    .form-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 10px; display: block;
+    }
+    .form-row { margin-bottom: 22px; }
+    .form-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+
+    /* date input */
+    .form-input {
+      width: 100%; padding: 12px 14px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--border);
+      border-radius: 10px; font-family: inherit; font-size: 14px;
+      color: var(--text); outline: none;
+      transition: border-color .2s, background .2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-input:focus { border-color: var(--accent); background: rgba(255,255,255,.07); }
+    .form-input::placeholder { color: var(--text-muted); }
+    input[type="date"].form-input::-webkit-calendar-picker-indicator {
+      filter: invert(.5); cursor: pointer;
+    }
+    textarea.form-input { min-height: 90px; resize: vertical; line-height: 1.6; }
+
+    /* party size stepper */
+    .stepper {
+      display: flex; align-items: center; gap: 0;
+      border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; width: fit-content;
+    }
+    .stepper-btn {
+      width: 44px; height: 44px; border: none;
+      background: rgba(255,255,255,.04); color: var(--text);
+      font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .stepper-btn:hover { background: rgba(255,255,255,.1); }
+    .stepper-btn:disabled { opacity: .3; cursor: not-allowed; }
+    .stepper-val {
+      width: 60px; text-align: center;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.1rem; font-weight: 600;
+      border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+      height: 44px; display: flex; align-items: center; justify-content: center;
+      color: var(--text);
+    }
+
+    /* time slots */
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+      gap: 8px;
+    }
+    .time-slot {
+      padding: 10px 6px; text-align: center;
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: 8px; font-size: 13px; font-weight: 500;
+      color: var(--text-sub); cursor: pointer;
+      transition: all .15s;
+    }
+    .time-slot:hover { border-color: var(--border-h); color: var(--text); }
+    .time-slot.selected { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+    .time-slot.unavailable { opacity: .25; cursor: not-allowed; text-decoration: line-through; }
+
+    /* action buttons */
+    .btn-row { display: flex; gap: 10px; margin-top: 28px; }
+    .btn {
+      flex: 1; padding: 14px 20px; border-radius: 10px;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all .18s; border: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-h); }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-ghost {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.09); color: var(--text); }
+
+    /* confirmation */
+    .confirm-screen {
+      display: none;
+      text-align: center; padding: 16px 0 8px;
+    }
+    .confirm-screen.active { display: block; }
+    .confirm-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--accent-dim); border: 1px solid rgba(217,119,87,.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .confirm-icon svg { width: 28px; height: 28px; color: var(--accent); }
+    .confirm-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.4rem; font-weight: 600; margin-bottom: 10px;
+    }
+    .confirm-sub { font-size: 14px; color: var(--text-sub); line-height: 1.7; margin-bottom: 24px; }
+    .confirm-card {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px; text-align: left;
+      margin-bottom: 20px;
+    }
+    .confirm-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .confirm-row:last-child { border-bottom: none; }
+    .confirm-row-label { color: var(--text-muted); }
+    .confirm-row-val { color: var(--text); font-weight: 500; }
+    .confirm-num {
+      font-size: 11px; color: var(--accent);
+      letter-spacing: 1px; font-weight: 600; margin-top: 16px;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      grid-column: 1/-1; text-align: center; padding: 80px 20px;
+      color: var(--text-muted); font-size: 14px;
+    }
+    .empty-state svg { width: 40px; height: 40px; margin-bottom: 16px; opacity: .3; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 60px 20px;
+      border-top: 1px solid var(--border); margin-top: 60px;
+    }
+    .footer-logo {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Noto Serif KR', serif; font-size: .9rem;
+      color: var(--text-muted); margin-bottom: 14px;
+    }
+    .footer-logo svg { width: 20px; height: 20px; color: var(--accent); }
+    footer p { font-size: 12px; color: var(--text-muted); line-height: 1.8; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero, .section, .controls { padding-left: 20px; padding-right: 20px; }
+      .stat-pill { padding: 12px 20px; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .search-wrap { max-width: 100%; }
+      .form-cols { grid-template-columns: 1fr; }
+      .modal { border-radius: 20px 20px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+      Michelin Guide Seoul
+    </div>
+    <h1>서울의 별을<br/>만나다</h1>
+    <p class="hero-sub">서울 미슐랭 가이드가 선정한 최고의 레스토랑들을 한눈에 — 3스타부터 1스타까지.</p>
+    <div class="hero-stats">
+      <div class="stat-pill"><span class="stat-num">3</span><span class="stat-label">3 Stars</span></div>
+      <div class="stat-pill"><span class="stat-num">8</span><span class="stat-label">2 Stars</span></div>
+      <div class="stat-pill"><span class="stat-num">22</span><span class="stat-label">1 Star</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── CONTROLS ── -->
+<div class="controls">
+  <div class="search-wrap">
+    <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="search-input" id="searchInput" type="text" placeholder="레스토랑, 장르, 지역 검색…" />
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" data-filter="all">전체</button>
+    <button class="filter-btn" data-filter="3">★★★ 3스타</button>
+    <button class="filter-btn" data-filter="2">★★ 2스타</button>
+    <button class="filter-btn" data-filter="1">★ 1스타</button>
+    <button class="filter-btn" data-filter="korean">한식</button>
+    <button class="filter-btn" data-filter="french">프렌치</button>
+    <button class="filter-btn" data-filter="japanese">일식</button>
+    <button class="filter-btn" data-filter="fusion">컨템퍼러리</button>
+  </div>
+</div>
+
+<!-- ── RESTAURANT LIST ── -->
+<div id="restaurantList"></div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+    </svg>
+    서울 미슐랭 가이드
+  </div>
+  <p>미슐랭 가이드 서울 2024 기준으로 작성되었습니다.<br>정보는 변경될 수 있으니 방문 전 공식 홈페이지를 확인하세요.</p>
+</footer>
+
+<!-- ── RESERVATION MODAL ── -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+
+    <!-- hero photo -->
+    <div class="modal-hero">
+      <img class="modal-hero-img" id="modalHeroImg" src="" alt="" />
+      <div class="modal-hero-content">
+        <div>
+          <div class="modal-stars" id="modalStars"></div>
+          <div class="modal-name" id="modalName"></div>
+          <div class="modal-name-kr" id="modalNameKr"></div>
+        </div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="닫기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- step tabs -->
+      <div class="modal-steps">
+        <button class="step-tab active" data-step="1">
+          <span class="step-num">1</span> 날짜 · 시간
+        </button>
+        <button class="step-tab" data-step="2">
+          <span class="step-num">2</span> 예약자 정보
+        </button>
+        <button class="step-tab" data-step="3">
+          <span class="step-num">3</span> 확인
+        </button>
+      </div>
+
+      <!-- SECTION 1: Date / Time / Party -->
+      <div class="form-section active" id="step1">
+        <div class="form-cols">
+          <div>
+            <label class="form-label" for="resDate">방문 날짜</label>
+            <input class="form-input" type="date" id="resDate" />
+          </div>
+          <div>
+            <label class="form-label">인원</label>
+            <div class="stepper">
+              <button class="stepper-btn" id="partyMinus">−</button>
+              <div class="stepper-val" id="partyVal">2</div>
+              <button class="stepper-btn" id="partyPlus">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">시간대 선택</label>
+          <div class="time-grid" id="timeGrid"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="step1Next" disabled>다음 단계</button>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Contact info -->
+      <div class="form-section" id="step2">
+        <div class="form-cols">
+          <div>
+            <label class="form-label" for="resName">예약자 이름</label>
+            <input class="form-input" type="text" id="resName" placeholder="홍길동" />
+          </div>
+          <div>
+            <label class="form-label" for="resPhone">연락처</label>
+            <input class="form-input" type="tel" id="resPhone" placeholder="010-0000-0000" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="resEmail">이메일</label>
+          <input class="form-input" type="email" id="resEmail" placeholder="example@email.com" />
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="resNote">특별 요청사항 (선택)</label>
+          <textarea class="form-input" id="resNote" placeholder="알레르기, 생일 이벤트, 좌석 선호 등을 알려주세요."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="step2Back">이전</button>
+          <button class="btn btn-primary" id="step2Next" disabled>예약 확인하기</button>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Review & Submit -->
+      <div class="form-section" id="step3">
+        <div id="reviewContent"></div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="step3Back">이전</button>
+          <button class="btn btn-primary" id="step3Submit">예약 완료하기</button>
+        </div>
+      </div>
+
+      <!-- CONFIRMATION -->
+      <div class="confirm-screen" id="confirmScreen">
+        <div class="confirm-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+        </div>
+        <div class="confirm-title">예약이 완료되었습니다</div>
+        <p class="confirm-sub">예약 확인 문자를 입력하신 연락처로 발송해 드렸습니다.<br>방문 당일 예약 번호를 알려주세요.</p>
+        <div class="confirm-card" id="confirmDetail"></div>
+        <div class="confirm-num" id="confirmNum"></div>
+        <div class="btn-row" style="margin-top:20px">
+          <button class="btn btn-ghost" onclick="closeModal()">닫기</button>
+        </div>
+      </div>
+
+    </div><!-- /modal-body -->
+  </div><!-- /modal -->
+</div><!-- /modal-backdrop -->
+
+<script>
+/* ────────────────────────────────────────────
+   DATA
+──────────────────────────────────────────── */
+const restaurants = [
+  /* 3 Stars */
+  {
+    stars:3, name:'Gaon', nameKr:'가온', cuisine:'한식 파인다이닝', type:'korean',
+    area:'강남구 논현동', price:'₩₩₩₩', phone:'02-545-2223',
+    desc:'한국 전통 궁중요리를 현대적으로 재해석한 최정상 파인다이닝. 계절 식재료를 활용한 테이스팅 메뉴가 인상적이다.',
+    reservation:'필수 (공식 홈페이지)',
+    hours:'점심 12:00 · 저녁 18:00',
+    timeSlots: ['12:00','12:30','18:00','18:30','19:00'],
+    unavailable: ['12:30','19:00'],
+    photo:'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:3, name:'Mingles', nameKr:'밍글스', cuisine:'한식 컨템퍼러리', type:'fusion',
+    area:'강남구 신사동 가로수길', price:'₩₩₩₩', phone:'02-515-2226',
+    desc:'강민구 셰프가 이끄는 한식과 서양식의 절묘한 조화. 한국 전통 발효식품을 모던하게 활용한 독창적 메뉴.',
+    reservation:'필수',
+    hours:'점심 12:00 · 저녁 18:30',
+    timeSlots: ['12:00','12:30','18:30','19:00','19:30'],
+    unavailable: ['12:00','19:30'],
+    photo:'https://images.unsplash.com/photo-1553163147-622ab57be1c7?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:3, name:'Mosu Seoul', nameKr:'모수 서울', cuisine:'컨템퍼러리', type:'fusion',
+    area:'종로구 삼청동', price:'₩₩₩₩', phone:'02-6203-1917',
+    desc:'안성재 셰프의 자연에서 영감 받은 예술적 코스 요리. 수개월 대기를 감수할 만한 서울 최고의 파인다이닝 경험.',
+    reservation:'필수 (수개월 대기)',
+    hours:'저녁 18:00~',
+    timeSlots: ['18:00','18:30','19:00','19:30','20:00'],
+    unavailable: ['18:00','18:30','19:00'],
+    photo:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+  },
+  /* 2 Stars */
+  {
+    stars:2, name:'Jungsik', nameKr:'정식당', cuisine:'뉴 코리안', type:'fusion',
+    area:'강남구 역삼동', price:'₩₩₩₩', phone:'02-517-4654',
+    desc:'임정식 셰프의 뉴 코리안 퀴진. 전통 한식을 파인다이닝 형식으로 완성한 현대 한국 요리의 선구자.',
+    reservation:'필수',
+    hours:'점심 12:00 · 저녁 18:00',
+    timeSlots: ['12:00','12:30','13:00','18:00','18:30','19:00'],
+    unavailable: ['12:30'],
+    photo:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:2, name:'La Yeon', nameKr:'라연', cuisine:'한식 파인다이닝', type:'korean',
+    area:'중구 장충동 (신라호텔)', price:'₩₩₩₩', phone:'02-2233-3131',
+    desc:'신라호텔 23층에 위치한 최고급 한식당. 전통 궁중 한식의 깊이와 현대적 감각이 어우러지는 공간.',
+    reservation:'필수',
+    hours:'점심 12:00 · 저녁 18:00',
+    timeSlots: ['12:00','12:30','13:00','18:00','18:30','19:00','19:30'],
+    unavailable: ['12:00'],
+    photo:'https://images.unsplash.com/photo-1576866209830-589e1bfbaa4d?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:2, name:'Kwon Sooksoo', nameKr:'권숙수', cuisine:'한식', type:'korean',
+    area:'강남구 청담동', price:'₩₩₩₩', phone:'02-542-6268',
+    desc:'권우중 셰프가 이끄는 한식 파인다이닝. 제철 식재료와 전통 조리법을 고집하는 진정성 있는 한국 요리.',
+    reservation:'필수',
+    hours:'저녁 18:00~',
+    timeSlots: ['18:00','18:30','19:00','19:30'],
+    unavailable: ['18:30'],
+    photo:'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:2, name:'Soigné', nameKr:'수아녜', cuisine:'컨템퍼러리', type:'fusion',
+    area:'강남구 청담동', price:'₩₩₩', phone:'02-547-8190',
+    desc:'류태환 셰프의 독창적 창작 요리. 한국적 정서와 글로벌 감각을 결합한 섬세한 테이스팅 코스.',
+    reservation:'필수',
+    hours:'저녁 18:00~',
+    timeSlots: ['18:00','18:30','19:00','19:30','20:00'],
+    unavailable: ['18:00'],
+    photo:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:2, name:'Sushi Sangjun', nameKr:'스시 상준', cuisine:'일식 오마카세', type:'japanese',
+    area:'강남구 청담동', price:'₩₩₩₩', phone:'02-549-1786',
+    desc:'도쿄에서 수련한 김상준 셰프의 에도마에 스시. 국내산 최상급 재료로 완성한 한 점 한 점.',
+    reservation:'필수 (수개월 대기)',
+    hours:'저녁 18:00 · 20:30',
+    timeSlots: ['18:00','20:30'],
+    unavailable: ['18:00'],
+    photo:'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:2, name:'Onjium', nameKr:'온지음', cuisine:'전통 한식', type:'korean',
+    area:'종로구 계동', price:'₩₩₩', phone:'02-742-5746',
+    desc:'궁중음식연구원과 연계한 전통 한식 레스토랑. 조선 왕실 음식 문화를 현대적으로 계승.',
+    reservation:'필수',
+    hours:'점심 12:00 · 저녁 18:00',
+    timeSlots: ['12:00','12:30','13:00','18:00','18:30'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:2, name:'Dote', nameKr:'도떼', cuisine:'프렌치 컨템퍼러리', type:'french',
+    area:'강남구 삼성동', price:'₩₩₩₩', phone:'02-511-3380',
+    desc:'유럽에서 수련한 셰프의 프렌치 기반 컨템퍼러리 요리. 계절마다 변하는 창의적 테이스팅 메뉴.',
+    reservation:'필수',
+    hours:'저녁 18:30~',
+    timeSlots: ['18:30','19:00','19:30','20:00'],
+    unavailable: ['19:00'],
+    photo:'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80',
+  },
+  /* 1 Star */
+  {
+    stars:1, name:'Bicena', nameKr:'비체나', cuisine:'이탈리안 컨템퍼러리', type:'fusion',
+    area:'강남구 청담동', price:'₩₩₩', phone:'02-548-2105',
+    desc:'한국과 이탈리아 식문화의 조화. 제철 재료를 활용한 창의적인 이탈리안 코스 요리.',
+    reservation:'권장',
+    hours:'점심 12:00 · 저녁 18:30',
+    timeSlots: ['12:00','12:30','13:00','18:30','19:00','19:30'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1540914124281-342587941389?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Evett', nameKr:'에벳', cuisine:'컨템퍼러리', type:'fusion',
+    area:'용산구 한남동', price:'₩₩₩', phone:'02-790-1917',
+    desc:'한남동의 감각적인 파인다이닝. 계절 식재료 기반의 창의적 메뉴로 호평 받는 레스토랑.',
+    reservation:'권장',
+    hours:'점심 12:00 · 저녁 18:30',
+    timeSlots: ['12:00','12:30','13:00','18:30','19:00','19:30'],
+    unavailable: ['12:30'],
+    photo:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Sushi Hyo', nameKr:'스시 효', cuisine:'일식 오마카세', type:'japanese',
+    area:'강남구 청담동', price:'₩₩₩₩', phone:'02-3448-0007',
+    desc:'국산 제철 해산물을 사용하는 정통 스시 오마카세. 셰프의 정성이 담긴 섬세한 한 점 한 점.',
+    reservation:'필수',
+    hours:'저녁 18:00 · 20:30',
+    timeSlots: ['18:00','20:30'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Dooreyoo', nameKr:'두레유', cuisine:'한식', type:'korean',
+    area:'종로구 통의동', price:'₩₩', phone:'02-739-7770',
+    desc:'제철 국내산 재료만을 사용하는 소박하고 정직한 한식. 경복궁 옆 고즈넉한 한옥 분위기.',
+    reservation:'권장',
+    hours:'점심 12:00 · 저녁 18:00',
+    timeSlots: ['12:00','12:30','13:00','18:00','18:30','19:00'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1607301405390-d831c242f59b?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Joo Ok', nameKr:'주옥', cuisine:'한식', type:'korean',
+    area:'강남구 청담동', price:'₩₩₩', phone:'02-541-3109',
+    desc:'신창호 셰프의 전통 한식 재해석. 발효와 숙성을 활용한 깊은 맛의 한식 코스 요리.',
+    reservation:'필수',
+    hours:'저녁 18:30~',
+    timeSlots: ['18:30','19:00','19:30','20:00'],
+    unavailable: ['19:30'],
+    photo:'https://images.unsplash.com/photo-1534482421-64566f976cfa?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Palais de Gaumont', nameKr:'팔레 드 고몽', cuisine:'프렌치 클래식', type:'french',
+    area:'용산구 이태원', price:'₩₩₩₩', phone:'02-798-6565',
+    desc:'클래식 프렌치 기법을 충실히 따르는 정통 프랑스 요리 레스토랑. 훌륭한 와인 페어링.',
+    reservation:'권장',
+    hours:'저녁 18:00~',
+    timeSlots: ['18:00','18:30','19:00','19:30','20:00'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Balwoo Gongyang', nameKr:'발우공양', cuisine:'사찰음식', type:'korean',
+    area:'종로구 수송동', price:'₩₩', phone:'02-733-2081',
+    desc:'불교 사찰음식을 선보이는 독특한 레스토랑. 오신채 없이 자연의 맛을 담은 건강한 채식 요리.',
+    reservation:'권장',
+    hours:'점심 11:30 · 저녁 17:30',
+    timeSlots: ['11:30','12:00','12:30','17:30','18:00'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Dining in Space', nameKr:'다이닝 인 스페이스', cuisine:'컨템퍼러리', type:'fusion',
+    area:'강남구 도산대로', price:'₩₩₩', phone:'02-518-0440',
+    desc:'독창적인 공간과 예술적인 음식이 만나는 레스토랑. 시각과 미각 모두를 자극하는 몰입형 경험.',
+    reservation:'필수',
+    hours:'저녁 18:30~',
+    timeSlots: ['18:30','19:00','19:30','20:00','20:30'],
+    unavailable: ['18:30','20:00'],
+    photo:'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Sushi Cho', nameKr:'스시 초', cuisine:'일식 오마카세', type:'japanese',
+    area:'강남구 논현동', price:'₩₩₩₩', phone:'02-546-0070',
+    desc:'광어부터 참치까지 국내산 제철 생선을 활용한 오마카세. 셰프의 내공이 빛나는 스시 코스.',
+    reservation:'필수',
+    hours:'저녁 18:00 · 20:30',
+    timeSlots: ['18:00','20:30'],
+    unavailable: ['20:30'],
+    photo:'https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Antares', nameKr:'안타레스', cuisine:'컨템퍼러리', type:'fusion',
+    area:'강남구 신사동', price:'₩₩₩', phone:'02-514-3371',
+    desc:'가로수길의 모던 파인다이닝. 프랑스 기법 기반의 창의적인 현대 요리.',
+    reservation:'권장',
+    hours:'저녁 18:00~',
+    timeSlots: ['18:00','18:30','19:00','19:30','20:00'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Yun', nameKr:'윤', cuisine:'한식 컨템퍼러리', type:'fusion',
+    area:'강남구 압구정동', price:'₩₩₩', phone:'02-547-2323',
+    desc:'한국의 제철 식재료와 서양 조리 기법의 조화. 세련된 인테리어와 편안한 분위기.',
+    reservation:'권장',
+    hours:'점심 12:00 · 저녁 18:30',
+    timeSlots: ['12:00','12:30','13:00','18:30','19:00','19:30'],
+    unavailable: ['13:00'],
+    photo:'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Ryunique', nameKr:'류니끄', cuisine:'컨템퍼러리', type:'fusion',
+    area:'강남구 신사동', price:'₩₩₩', phone:'02-541-6651',
+    desc:'류태환 셰프의 전 레스토랑 계보를 잇는 모던 다이닝. 유니크한 식재료 조합이 특징.',
+    reservation:'권장',
+    hours:'점심 12:00 · 저녁 18:30',
+    timeSlots: ['12:00','12:30','13:00','18:30','19:00','19:30'],
+    unavailable: [],
+    photo:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    stars:1, name:'Haevichi', nameKr:'해비치', cuisine:'한식 (해산물)', type:'korean',
+    area:'중구 소공동 (롯데호텔)', price:'₩₩₩', phone:'02-317-7181',
+    desc:'신선한 해산물 중심의 고급 한식. 롯데호텔 내 위치한 프리미엄 한식당.',
+    reservation:'권장',
+    hours:'점심 11:30 · 저녁 17:30',
+    timeSlots: ['11:30','12:00','12:30','17:30','18:00','18:30'],
+    unavailable: ['12:00'],
+    photo:'https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=800&q=80',
+  },
+];
+
+/* ────────────────────────────────────────────
+   SVG HELPERS
+──────────────────────────────────────────── */
+function starSVG(filled) {
+  const c = filled ? '#d97757' : 'rgba(217,119,87,.3)';
+  return `<svg viewBox="0 0 24 24" fill="${filled?c:'none'}" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+  </svg>`;
+}
+
+/* fallback SVG illustrations per type */
+const fallbackSVG = {
+  korean: `<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="320" height="200" fill="#1a1010"/>${Array.from({length:8},(_,i)=>`<rect x="${i*42}" y="0" width="20" height="200" fill="hsl(20,40%,14%)" opacity=".6"/>`).join('')}${Array.from({length:6},(_,i)=>`<rect x="0" y="${i*34}" width="320" height="14" fill="hsl(20,35%,12%)" opacity=".5"/>`).join('')}<path d="M112 100 C108 130 212 130 208 100" fill="hsl(20,35%,14%)" stroke="#d97757" stroke-width="1.2" opacity=".8"/><line x1="148" y1="65" x2="144" y2="103" stroke="#d97757" stroke-width="1.5" stroke-linecap="round" opacity=".9"/><line x1="174" y1="65" x2="176" y2="103" stroke="#d97757" stroke-width="1.5" stroke-linecap="round" opacity=".9"/></svg>`,
+  japanese: `<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="320" height="200" fill="hsl(220,30%,8%)"/>${Array.from({length:7},(_,i)=>`<line x1="${i*54}" y1="0" x2="${i*54}" y2="200" stroke="rgba(255,255,255,.04)" stroke-width="1"/>`).join('')}<ellipse cx="160" cy="120" rx="68" ry="14" fill="rgba(217,119,87,.1)" stroke="#d97757" stroke-width=".8" opacity=".6"/><rect x="128" y="100" width="22" height="14" rx="3" fill="hsl(220,25%,13%)" stroke="#d97757" stroke-width=".8" opacity=".9"/><rect x="156" y="100" width="22" height="14" rx="3" fill="hsl(220,25%,13%)" stroke="#d97757" stroke-width=".8" opacity=".9"/><rect x="184" y="100" width="22" height="14" rx="3" fill="hsl(220,25%,13%)" stroke="#d97757" stroke-width=".8" opacity=".9"/><ellipse cx="139" cy="99" rx="10" ry="4" fill="#d97757" opacity=".7"/><ellipse cx="167" cy="99" rx="10" ry="4" fill="hsl(200,60%,40%)" opacity=".6"/><ellipse cx="195" cy="99" rx="10" ry="4" fill="#d97757" opacity=".5"/></svg>`,
+  french: `<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="320" height="200" fill="hsl(240,20%,8%)"/>${Array.from({length:22},(_,i)=>`<line x1="0" y1="${i*9}" x2="320" y2="${i*9}" stroke="rgba(255,255,255,.025)" stroke-width="1"/>`).join('')}<ellipse cx="160" cy="130" rx="72" ry="10" fill="hsl(240,15%,14%)" stroke="rgba(255,255,255,.08)" stroke-width=".8"/><path d="M92 130 Q92 75 160 72 Q228 75 228 130 Z" fill="hsl(240,15%,14%)" stroke="rgba(255,255,255,.08)" stroke-width=".8"/><ellipse cx="160" cy="73" rx="12" ry="5" fill="hsl(240,15%,14%)" stroke="#d97757" stroke-width=".8" opacity=".8"/><rect x="155" y="63" width="10" height="14" rx="5" fill="hsl(240,15%,14%)" stroke="#d97757" stroke-width=".8" opacity=".8"/></svg>`,
+  fusion: `<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="320" height="200" fill="hsl(260,25%,8%)"/><ellipse cx="220" cy="55" rx="80" ry="45" fill="hsl(260,20%,14%)" opacity=".7"/><ellipse cx="90" cy="150" rx="70" ry="38" fill="hsl(260,20%,14%)" opacity=".5"/><circle cx="160" cy="105" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/><circle cx="160" cy="105" r="40" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.04)" stroke-width=".8"/><circle cx="160" cy="105" r="14" fill="hsl(260,20%,14%)" stroke="#d97757" stroke-width=".8" opacity=".9"/><circle cx="160" cy="105" r="8" fill="#d97757" opacity=".4"/></svg>`,
+};
+
+function getFallback(type) {
+  return fallbackSVG[type] || fallbackSVG.fusion;
+}
+
+/* ────────────────────────────────────────────
+   RENDER CARDS
+──────────────────────────────────────────── */
+function makeCard(r) {
+  const starsHTML = Array.from({length:3},(_,i)=>starSVG(i<r.stars)).join('');
+  return `<div class="card" onclick="openModal('${r.name.replace(/'/g,"\\'")}')">
+    <div class="card-art">
+      <img class="card-photo"
+        src="${r.photo}"
+        alt="${r.nameKr}"
+        loading="lazy"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      />
+      <div class="card-art-fallback" style="display:none">${getFallback(r.type)}</div>
+      <div class="card-art-info">
+        <div class="art-badge">${starsHTML}</div>
+        <div class="art-cuisine-pill">${r.cuisine}</div>
+      </div>
+      <div class="card-reserve-hint">예약하기</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${r.name}</div>
+      <div class="card-name-kr">${r.nameKr} · ${r.area}</div>
+      <p class="card-desc">${r.desc}</p>
+      <div class="card-meta">
+        <div class="card-meta-info">
+          <div class="meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>${r.hours}</span>
+          </div>
+          <div class="meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12.1 19.79 19.79 0 0 1 1.35 3.5 2 2 0 0 1 3.32 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.43a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+            <span>예약 ${r.reservation}</span>
+          </div>
+        </div>
+        <div class="card-action-btns">
+          <a class="call-btn" href="tel:${r.phone}" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12.1 19.79 19.79 0 0 1 1.35 3.5 2 2 0 0 1 3.32 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.43a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+            전화하기
+          </a>
+          <a class="map-btn" href="https://map.kakao.com/link/search/${encodeURIComponent(r.nameKr)}" target="_blank" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            지도 보기
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(data) {
+  const container = document.getElementById('restaurantList');
+  if (!data.length) {
+    container.innerHTML = `<div class="section"><div class="grid"><div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <div>검색 결과가 없습니다</div></div></div></div>`;
+    return;
+  }
+  let html = '';
+  [3,2,1].forEach(stars => {
+    const g = data.filter(r=>r.stars===stars);
+    if (!g.length) return;
+    const labels = {3:'3스타 · Three Stars', 2:'2스타 · Two Stars', 1:'1스타 · One Star'};
+    const starsHTML = Array.from({length:3},(_,i)=>starSVG(i<stars)).join('');
+    html += `<div class="section">
+      <div class="section-header">
+        <div class="section-stars">${starsHTML}</div>
+        <span class="section-title-text">${labels[stars]}</span>
+        <div class="section-rule"></div>
+        <span class="section-count">${g.length}개</span>
+      </div>
+      <div class="grid">${g.map(makeCard).join('')}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+/* ────────────────────────────────────────────
+   FILTER & SEARCH
+──────────────────────────────────────────── */
+let currentFilter = 'all', currentSearch = '';
+function applyFilter() {
+  let f = restaurants;
+  if (['1','2','3'].includes(currentFilter)) f = f.filter(r=>r.stars===+currentFilter);
+  else if (currentFilter !== 'all') f = f.filter(r=>r.type===currentFilter);
+  if (currentSearch) f = f.filter(r=>[r.name,r.nameKr,r.cuisine,r.area,r.desc].join(' ').toLowerCase().includes(currentSearch));
+  render(f);
+}
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    applyFilter();
+  });
+});
+document.getElementById('searchInput').addEventListener('input',e=>{
+  currentSearch = e.target.value.trim().toLowerCase();
+  applyFilter();
+});
+
+/* ────────────────────────────────────────────
+   RESERVATION MODAL
+──────────────────────────────────────────── */
+let currentRestaurant = null;
+let resState = { date:'', time:'', party:2, name:'', phone:'', email:'', note:'' };
+let currentStep = 1;
+
+function openModal(restaurantName) {
+  currentRestaurant = restaurants.find(r=>r.name===restaurantName);
+  if (!currentRestaurant) return;
+
+  // reset state
+  resState = { date:'', time:'', party:2, name:'', phone:'', email:'', note:'' };
+  currentStep = 1;
+
+  // populate hero
+  document.getElementById('modalHeroImg').src = currentRestaurant.photo;
+  document.getElementById('modalHeroImg').onerror = function(){
+    this.style.display='none';
+    this.parentElement.style.background='hsl(20,30%,12%)';
+  };
+  document.getElementById('modalName').textContent = currentRestaurant.name;
+  document.getElementById('modalNameKr').textContent = currentRestaurant.nameKr + ' · ' + currentRestaurant.area;
+  document.getElementById('modalStars').innerHTML = Array.from({length:3},(_,i)=>starSVG(i<currentRestaurant.stars)).join('');
+
+  // set min date to tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate()+1);
+  const minDate = tomorrow.toISOString().split('T')[0];
+  document.getElementById('resDate').min = minDate;
+  document.getElementById('resDate').value = '';
+
+  // time slots
+  buildTimeGrid();
+
+  // party
+  document.getElementById('partyVal').textContent = '2';
+  resState.party = 2;
+
+  // clear fields
+  ['resName','resPhone','resEmail','resNote'].forEach(id=>document.getElementById(id).value='');
+
+  // show step 1
+  showStep(1);
+
+  // hide confirm
+  document.getElementById('confirmScreen').classList.remove('active');
+  document.getElementById('modal').querySelectorAll('.form-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('step1Next').disabled = true;
+
+  // show modal
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function buildTimeGrid() {
+  const r = currentRestaurant;
+  const grid = document.getElementById('timeGrid');
+  grid.innerHTML = r.timeSlots.map(t=>{
+    const unavail = r.unavailable.includes(t);
+    return `<button class="time-slot${unavail?' unavailable':''}"
+      onclick="selectTime('${t}')"
+      ${unavail?'disabled':''}
+    >${t}${unavail?'<br><span style="font-size:10px;opacity:.7">마감</span>':''}</button>`;
+  }).join('');
+}
+
+function selectTime(t) {
+  resState.time = t;
+  document.querySelectorAll('.time-slot').forEach(el=>el.classList.remove('selected'));
+  const slots = document.querySelectorAll('.time-slot');
+  slots.forEach(el=>{ if(el.textContent.includes(t)) el.classList.add('selected'); });
+  validateStep1();
+}
+
+function validateStep1() {
+  const ok = resState.date && resState.time;
+  document.getElementById('step1Next').disabled = !ok;
+}
+
+function validateStep2() {
+  const name = document.getElementById('resName').value.trim();
+  const phone = document.getElementById('resPhone').value.trim();
+  const ok = name.length > 0 && phone.length > 0;
+  document.getElementById('step2Next').disabled = !ok;
+}
+
+function showStep(n) {
+  currentStep = n;
+  [1,2,3].forEach(i=>{
+    const tab = document.querySelector(`.step-tab[data-step="${i}"]`);
+    const sec = document.getElementById(`step${i}`);
+    tab.classList.remove('active','done');
+    if (sec) sec.classList.remove('active');
+    if (i < n) tab.classList.add('done');
+    if (i === n) { tab.classList.add('active'); if(sec) sec.classList.add('active'); }
+  });
+  document.getElementById('confirmScreen').classList.remove('active');
+}
+
+function buildReview() {
+  resState.name  = document.getElementById('resName').value.trim();
+  resState.phone = document.getElementById('resPhone').value.trim();
+  resState.email = document.getElementById('resEmail').value.trim();
+  resState.note  = document.getElementById('resNote').value.trim();
+  const r = currentRestaurant;
+  document.getElementById('reviewContent').innerHTML = `
+    <div style="margin-bottom:20px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">예약 내역 확인</div>
+      <div class="confirm-card">
+        <div class="confirm-row"><span class="confirm-row-label">레스토랑</span><span class="confirm-row-val">${r.name} (${r.nameKr})</span></div>
+        <div class="confirm-row"><span class="confirm-row-label">날짜</span><span class="confirm-row-val">${formatDate(resState.date)}</span></div>
+        <div class="confirm-row"><span class="confirm-row-label">시간</span><span class="confirm-row-val">${resState.time}</span></div>
+        <div class="confirm-row"><span class="confirm-row-label">인원</span><span class="confirm-row-val">${resState.party}명</span></div>
+        <div class="confirm-row"><span class="confirm-row-label">예약자</span><span class="confirm-row-val">${resState.name}</span></div>
+        <div class="confirm-row"><span class="confirm-row-label">연락처</span><span class="confirm-row-val">${resState.phone}</span></div>
+        ${resState.email?`<div class="confirm-row"><span class="confirm-row-label">이메일</span><span class="confirm-row-val">${resState.email}</span></div>`:''}
+        ${resState.note?`<div class="confirm-row"><span class="confirm-row-label">요청사항</span><span class="confirm-row-val" style="max-width:60%;text-align:right">${resState.note}</span></div>`:''}
+      </div>
+    </div>`;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  const days = ['일','월','화','수','목','금','토'];
+  const w = new Date(d).getDay();
+  return `${y}년 ${+m}월 ${+day}일 (${days[w]})`;
+}
+
+function submitReservation() {
+  const r = currentRestaurant;
+  const num = 'MCH-' + Date.now().toString(36).toUpperCase().slice(-8);
+  [1,2,3].forEach(i=>{
+    const tab = document.querySelector(`.step-tab[data-step="${i}"]`);
+    const sec = document.getElementById(`step${i}`);
+    tab.classList.remove('active'); tab.classList.add('done');
+    if(sec) sec.classList.remove('active');
+  });
+  document.getElementById('confirmDetail').innerHTML = `
+    <div class="confirm-row"><span class="confirm-row-label">레스토랑</span><span class="confirm-row-val">${r.name}</span></div>
+    <div class="confirm-row"><span class="confirm-row-label">날짜 · 시간</span><span class="confirm-row-val">${formatDate(resState.date)} ${resState.time}</span></div>
+    <div class="confirm-row"><span class="confirm-row-label">인원</span><span class="confirm-row-val">${resState.party}명</span></div>
+    <div class="confirm-row"><span class="confirm-row-label">예약자</span><span class="confirm-row-val">${resState.name} · ${resState.phone}</span></div>`;
+  document.getElementById('confirmNum').textContent = '예약번호 ' + num;
+  document.getElementById('confirmScreen').classList.add('active');
+  document.querySelector('.modal').scrollTop = 0;
+}
+
+/* events */
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalBackdrop').addEventListener('click', e=>{
+  if(e.target===document.getElementById('modalBackdrop')) closeModal();
+});
+
+document.getElementById('resDate').addEventListener('change', e=>{
+  resState.date = e.target.value;
+  validateStep1();
+});
+
+/* party stepper */
+document.getElementById('partyMinus').addEventListener('click',()=>{
+  if(resState.party>1){ resState.party--; document.getElementById('partyVal').textContent=resState.party; }
+  document.getElementById('partyMinus').disabled = resState.party<=1;
+  document.getElementById('partyPlus').disabled = resState.party>=10;
+});
+document.getElementById('partyPlus').addEventListener('click',()=>{
+  if(resState.party<10){ resState.party++; document.getElementById('partyVal').textContent=resState.party; }
+  document.getElementById('partyMinus').disabled = resState.party<=1;
+  document.getElementById('partyPlus').disabled = resState.party>=10;
+});
+
+/* step navigation */
+document.getElementById('step1Next').addEventListener('click',()=>showStep(2));
+document.getElementById('step2Back').addEventListener('click',()=>showStep(1));
+document.getElementById('step2Next').addEventListener('click',()=>{ buildReview(); showStep(3); });
+document.getElementById('step3Back').addEventListener('click',()=>showStep(2));
+document.getElementById('step3Submit').addEventListener('click',()=>submitReservation());
+
+/* step 2 validation */
+['resName','resPhone'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', validateStep2);
+});
+
+/* step tabs (nav back) */
+document.querySelectorAll('.step-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const n = +tab.dataset.step;
+    if(n<currentStep) showStep(n);
+  });
+});
+
+/* keyboard close */
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ────────────────────────────────────────────
+   INIT
+──────────────────────────────────────────── */
+render(restaurants);
+</script>
+</body>
+</html>
